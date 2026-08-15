@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Saudagar Invest - Website Saham</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #07130f;
+            color: white;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: #0c1d17;
+            border-bottom: 1px solid #1c3d31;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #39e58c;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #b8c9c1;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #39e58c;
+        }
+
+        .login-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #39e58c;
+            color: #04100b;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            padding: 70px 7%;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 40px;
+            align-items: center;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(57, 229, 140, 0.18),
+                    transparent 35%
+                );
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #39e58c;
+        }
+
+        .hero p {
+            color: #9fb3aa;
+            line-height: 1.7;
+            max-width: 650px;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            padding: 15px 25px;
+            background: #39e58c;
+            color: #05130d;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .hero-btn-outline {
+            padding: 14px 25px;
+            background: transparent;
+            color: white;
+            border: 1px solid #315648;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           HERO MARKET CARD
+        ========================== */
+
+        .market-box {
+            background: rgba(14, 34, 27, 0.9);
+            border: 1px solid #1c4938;
+            padding: 25px;
+            border-radius: 18px;
+        }
+
+        .market-box h3 {
+            margin-bottom: 20px;
+        }
+
+        .ihsg {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .green {
+            color: #39e58c;
+        }
+
+        .red {
+            color: #ff6666;
+        }
+
+        .chart {
+            height: 160px;
+            margin-top: 25px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .bar {
+            flex: 1;
+            border-radius: 5px 5px 0 0;
+            background: linear-gradient(
+                to top,
+                #0f7045,
+                #39e58c
+            );
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
+
+        .container {
+            width: 86%;
+            margin: auto;
+            padding-bottom: 80px;
+        }
+
+        .section-title {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .section-title p {
+            color: #83998f;
+            margin-top: 7px;
+        }
+
+        /* =========================
+           SUMMARY CARDS
+        ========================== */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .summary-card {
+            background: #0d2119;
+            border: 1px solid #1c4032;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .summary-card p {
+            color: #8da298;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .summary-card h2 {
+            font-size: 24px;
+        }
+
+        /* =========================
+           STOCK AREA
+        ========================== */
+
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            background: #0d2119;
+            border: 1px solid #244d3c;
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            outline: none;
+            width: 280px;
+        }
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0d2119;
+            min-width: 750px;
+        }
+
+        th {
+            color: #849a90;
+            font-weight: normal;
+            font-size: 14px;
+            background: #10281f;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 18px;
+            border-bottom: 1px solid #19392c;
+        }
+
+        tr {
+            transition: 0.25s;
+        }
+
+        tbody tr:hover {
+            background: #123026;
+        }
+
+        .stock-code {
+            font-weight: bold;
+            color: white;
+        }
+
+        .stock-name {
+            font-size: 13px;
+            color: #81968c;
+            margin-top: 4px;
+        }
+
+        .watch-btn {
+            border: 1px solid #39e58c;
+            background: transparent;
+            color: #39e58c;
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .watch-btn.active {
+            background: #39e58c;
+            color: #05130d;
+        }
+
+        /* =========================
+           NEWS
+        ========================== */
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .news-card {
+            background: #0d2119;
+            border: 1px solid #1c4032;
+            border-radius: 15px;
+            padding: 22px;
+        }
+
+        .news-category {
+            display: inline-block;
+            font-size: 12px;
+            color: #39e58c;
+            margin-bottom: 15px;
+        }
+
+        .news-card h3 {
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .news-card p {
+            color: #84998f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #081710;
+            padding: 40px 7%;
+            border-top: 1px solid #19382c;
+            display: flex;
+            justify-content: space-between;
+            color: #7b9187;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .menu {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            nav,
+            .hero {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stock-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <nav>
+
+        <div class="logo">
+            SAUDAGAR <span>INVEST</span>
+        </div>
+
+        <div class="menu">
+            <a href="#home">Beranda</a>
+            <a href="#market">Market</a>
+            <a href="#portfolio">Portofolio</a>
+            <a href="#news">Berita</a>
+        </div>
+
+        <button class="login-btn" onclick="login()">
+            Masuk
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div>
+            <h1>
+                Investasi Saham
+                <span>Lebih Cerdas.</span>
+            </h1>
+
+            <p>
+                Pantau pergerakan saham Indonesia, kelola watchlist,
+                analisis pasar, dan bangun portofolio investasi Anda
+                bersama Saudagar Invest.
+            </p>
+
+            <button class="hero-btn" onclick="scrollMarket()">
+                Lihat Market
+            </button>
+
+            <button class="hero-btn-outline">
+                Pelajari Saham
+            </button>
+        </div>
+
+
+        <div class="market-box">
+
+            <h3>Indeks Harga Saham Gabungan</h3>
+
+            <div class="ihsg">
+                7.245,81
+            </div>
+
+            <div class="green">
+                ▲ +42,18 (+0,59%)
+            </div>
+
+            <div class="chart">
+
+                <div class="bar" style="height:40%"></div>
+                <div class="bar" style="height:55%"></div>
+                <div class="bar" style="height:50%"></div>
+                <div class="bar" style="height:65%"></div>
+                <div class="bar" style="height:59%"></div>
+                <div class="bar" style="height:75%"></div>
+                <div class="bar" style="height:68%"></div>
+                <div class="bar" style="height:82%"></div>
+                <div class="bar" style="height:78%"></div>
+                <div class="bar" style="height:95%"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTENT
+    ========================== -->
+
+    <main class="container">
+
+        <!-- PORTFOLIO -->
+
+        <section id="portfolio">
+
+            <div class="section-title">
+                <h2>Ringkasan Portofolio</h2>
+                <p>Informasi portofolio investasi Anda.</p>
+            </div>
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+                    <p>Total Aset</p>
+                    <h2>Rp 125.450.000</h2>
+                </div>
+
+                <div class="summary-card">
+                    <p>Profit / Loss</p>
+                    <h2 class="green">
+                        +Rp 8.420.000
+                    </h2>
+                </div>
+
+                <div class="summary-card">
+                    <p>Return</p>
+                    <h2 class="green">
+                        +7,19%
+                    </h2>
+                </div>
+
+                <div class="summary-card">
+                    <p>Saham Dimiliki</p>
+                    <h2>8 Emiten</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MARKET -->
+
+        <section id="market">
+
+            <div class="section-title">
+                <h2>Market Saham</h2>
+                <p>
+                    Pantau beberapa saham populer di Bursa Efek Indonesia.
+                </p>
+            </div>
+
+
+            <div class="stock-header">
+
+                <h3>Daftar Saham</h3>
+
+                <input
+                    id="searchInput"
+                    class="search-box"
+                    type="text"
+                    placeholder="Cari kode atau nama saham..."
+                    onkeyup="searchStock()"
+                >
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table id="stockTable">
+
+                    <thead>
+
+                        <tr>
+                            <th>Saham</th>
+                            <th>Harga</th>
+                            <th>Perubahan</th>
+                            <th>Volume</th>
+                            <th>Market Cap</th>
+                            <th>Watchlist</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <div class="stock-code">BBCA</div>
+                                <div class="stock-name">
+                                    Bank Central Asia Tbk
+                                </div>
+                            </td>
+
+                            <td>Rp 10.125</td>
+
+                            <td class="green">
+                                +1,25%
+                            </td>
+
+                            <td>82,4M</td>
+
+                            <td>Rp 1.248T</td>
+
+                            <td>
+                                <button
+                                    class="watch-btn"
+                                    onclick="toggleWatchlist(this, 'BBCA')">
+                                    + Watchlist
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <div class="stock-code">BBRI</div>
+                                <div class="stock-name">
+                                    Bank Rakyat Indonesia Tbk
+                                </div>
+                            </td>
+
+                            <td>Rp 4.720</td>
+
+                            <td class="green">
+                                +0,85%
+                            </td>
+
+                            <td>115,2M</td>
+
+                            <td>Rp 715T</td>
+
+                            <td>
+                                <button
+                                    class="watch-btn"
+                                    onclick="toggleWatchlist(this, 'BBRI')">
+                                    + Watchlist
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <div class="stock-code">BMRI</div>
+                                <div class="stock-name">
+                                    Bank Mandiri Tbk
+                                </div>
+                            </td>
+
+                            <td>Rp 6.125</td>
+
+                            <td class="red">
+                                -0,41%
+                            </td>
+
+                            <td>74,5M</td>
+
+                            <td>Rp 571T</td>
+
+                            <td>
+                                <button
+                                    class="watch-btn"
+                                    onclick="toggleWatchlist(this, 'BMRI')">
+                                    + Watchlist
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <div class="stock-code">TLKM</div>
+                                <div class="stock-name">
+                                    Telkom Indonesia Tbk
+                                </div>
+                            </td>
+
+                            <td>Rp 3.150</td>
+
+                            <td class="green">
+                                +0,64%
+                            </td>
+
+                            <td>63,2M</td>
+
+                            <td>Rp 312T</td>
+
+                            <td>
+                                <button
+                                    class="watch-btn"
+                                    onclick="toggleWatchlist(this, 'TLKM')">
+                                    + Watchlist
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <div class="stock-code">ASII</div>
+                                <div class="stock-name">
+                                    Astra International Tbk
+                                </div>
+                            </td>
+
+                            <td>Rp 5.175</td>
+
+                            <td class="red">
+                                -0,96%
+                            </td>
+
+                            <td>38,1M</td>
+
+                            <td>Rp 209T</td>
+
+                            <td>
+                                <button
+                                    class="watch-btn"
+                                    onclick="toggleWatchlist(this, 'ASII')">
+                                    + Watchlist
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <div class="stock-code">ANTM</div>
+                                <div class="stock-name">
+                                    Aneka Tambang Tbk
+                                </div>
+                            </td>
+
+                            <td>Rp 1.530</td>
+
+                            <td class="green">
+                                +2,00%
+                            </td>
+
+                            <td>91,7M</td>
+
+                            <td>Rp 36,7T</td>
+
+                            <td>
+                                <button
+                                    class="watch-btn"
+                                    onclick="toggleWatchlist(this, 'ANTM')">
+                                    + Watchlist
+                                </button>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- NEWS -->
+
+        <section id="news">
+
+            <div class="section-title">
+                <h2>Berita & Insight</h2>
+
+                <p>
+                    Informasi untuk membantu memahami kondisi pasar.
+                </p>
+            </div>
+
+
+            <div class="news-grid">
+
+                <article class="news-card">
+
+                    <span class="news-category">
+                        MARKET
+                    </span>
+
+                    <h3>
+                        IHSG Menguat, Saham Perbankan Menjadi Perhatian
+                    </h3>
+
+                    <p>
+                        Simulasi konten berita pasar untuk tampilan
+                        website Saudagar Invest.
+                    </p>
+
+                </article>
+
+
+                <article class="news-card">
+
+                    <span class="news-category">
+                        EDUKASI
+                    </span>
+
+                    <h3>
+                        Cara Membaca Laporan Keuangan Perusahaan
+                    </h3>
+
+                    <p>
+                        Kenali pendapatan, laba bersih, aset, utang,
+                        dan arus kas sebelum memilih sebuah saham.
+                    </p>
+
+                </article>
+
+
+                <article class="news-card">
+
+                    <span class="news-category">
+                        INVESTASI
+                    </span>
+
+                    <h3>
+                        Pentingnya Diversifikasi Portofolio Saham
+                    </h3>
+
+                    <p>
+                        Diversifikasi dapat membantu mengurangi risiko
+                        dengan tidak menempatkan seluruh dana pada
+                        satu perusahaan.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div>
+            © 2026 Saudagar Invest
+        </div>
+
+        <div>
+            Data pada halaman ini hanya untuk simulasi.
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        // Tombol menuju market
+        function scrollMarket() {
+
+            document
+                .getElementById("market")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+        // Pencarian saham
+        function searchStock() {
+
+            const input =
+                document
+                .getElementById("searchInput")
+                .value
+                .toUpperCase();
+
+            const table =
+                document.getElementById("stockTable");
+
+            const rows =
+                table
+                .getElementsByTagName("tbody")[0]
+                .getElementsByTagName("tr");
+
+
+            for (let i = 0; i < rows.length; i++) {
+
+                const text =
+                    rows[i]
+                        .innerText
+                        .toUpperCase();
+
+                if (text.includes(input)) {
+
+                    rows[i].style.display = "";
+
+                } else {
+
+                    rows[i].style.display = "none";
+
+                }
+
+            }
+
+        }
+
+
+        // Watchlist
+        function toggleWatchlist(button, stock) {
+
+            if (
+                button.classList.contains("active")
+            ) {
+
+                button.classList.remove("active");
+
+                button.innerHTML =
+                    "+ Watchlist";
+
+            } else {
+
+                button.classList.add("active");
+
+                button.innerHTML =
+                    "✓ Dipantau";
+
+                alert(
+                    stock +
+                    " berhasil ditambahkan ke watchlist!"
+                );
+
+            }
+
+        }
+
+
+        // Simulasi tombol masuk
+        function login() {
+
+            alert(
+                "Fitur login akan dibuat pada tahap berikutnya."
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
